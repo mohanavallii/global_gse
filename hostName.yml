@@ -1,50 +1,18 @@
 ---
-- name: "Gateway Checker"
-  hosts: all
-  gather_facts: True
-  tasks: 
- 
-   - name: hostname
-     debug:
-       var=ansible_hostname
+# vars.yml
+#
+# Shows the value of all variables/facts.
+#
+# Example:
+#
+#   ansible-playbook vars.yml -e 'hosts=localhost'
+#
+- hosts: all
+  tasks:
+    - fail: "You must specify a value for `hosts` variable - e.g.: ansible-playbook vars.yml -e 'hosts=localhost'"
+      when: hosts is not defined
 
-   - name: date and time
-     vars:
-      msg: |
-       Date: {{ ansible_date_time.date }}
-       Timezone: {{ ansible_date_time.tz }}
-     debug:
-      msg: "{{ msg.split('\n') }}"
-      
-   - name: network info
-     vars:
-      msg: |     
-       All IP: {{ ansible_default_ipv4.address }}
-       Gateway: {{ ansible_default_ipv4.gateway }}
-       Eth0 MAC: {{ ansible_eth0.macaddress }}
-     when: ansible_distribution == "Ubuntu"
-     debug:
-      msg: "{{ msg.split('\n') }}"
-        
-
-   - name: OS and Kernel info
-     vars:
-      msg: |
-       Distribution: {{ ansible_distribution }}
-       Release: {{ ansible_distribution_release }}
-       Distribution Version: {{ ansible_distribution_version }}
-       Kernel: {{ ansible_kernel }}
-       Architecture: {{ ansible_architecture }}
-     debug:
-      msg: "{{ msg.split('\n') }}"
-
-   - name: HW info
-     vars:
-      msg: |
-       CPU: {{ ansible_processor }}
-       CPU Core: {{ ansible_processor_cores }}
-       RAM: {{ ansible_memtotal_mb }}
-       SWAP: {{ ansible_memory_mb.swap.total }}
-     debug:
-
-      msg: "{{ msg.split('\n') }}"
+- hosts: "{{ hosts }}"
+  tasks:
+    - debug: var=vars
+    - debug: var=hostvars[inventory_hostname]
