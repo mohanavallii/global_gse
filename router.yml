@@ -1,0 +1,15 @@
+---
+- name: Run Arista command
+  eos_command:
+    commands: show ip int br
+  when: ansible_network_os == 'eos'
+
+- name: Run Cisco NXOS command
+  nxos_command:
+    commands: show ip int br
+  when: ansible_network_os == 'nxos'
+
+- name: Run Vyos command
+  vyos_command:
+    commands: show interface
+  when: ansible_network_os == 'vyos'
