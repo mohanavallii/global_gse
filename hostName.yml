@@ -15,6 +15,10 @@
        Timezone: {{ ansible_date_time.tz }}
      debug:
       msg: "{{ msg.split('\n') }}"
+      
+    - name: Ansible fact OS 
+      debug:
+        msg: "{{ ansible_distribution }}"
 
    - name: network info
      vars:
