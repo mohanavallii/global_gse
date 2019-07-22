@@ -3,12 +3,7 @@
   hosts: all
   gather_facts: True
   tasks: 
-    - name: arc
-      vars:      
-          ipv4 : {{ ansible_all_ipv4_addresses | type_debug }}
-      debug:
-      msg: "{{ msg.split('\n') }}"
-   
+ 
    - name: hostname
      debug:
        var=ansible_hostname
