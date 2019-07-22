@@ -4,7 +4,7 @@
    - name: hostname
      debug:
        var=ansible_hostname
-      
+
    - name: date and time
      vars:
       msg: |
@@ -13,10 +13,15 @@
      debug:
       msg: "{{ msg.split('\n') }}"
 
-  - name: find interface facts
-    debug:
-      msg: "{{ hostvars[inventory_hostname]['ansible_%s' | format(item)] }}"
-    with_items: "{{ ansible_interfaces }}"
+   - name: network info
+     vars:
+      msg: |
+       All Interface List: {{ ansible_interfaces }}
+       All IP: {{ ansible_all_ipv4_addresses }}
+       Gateway: {{ ansible_default_ipv4.gateway }}
+       Eth0 MAC: {{ ansible_eth0.macaddress }}
+     debug:
+      msg: "{{ msg.split('\n') }}"
 
    - name: OS and Kernel info
      vars:
