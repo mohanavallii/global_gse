@@ -22,9 +22,10 @@
        All IP: {{ ansible_default_ipv4.address }}
        Gateway: {{ ansible_default_ipv4.gateway }}
        Eth0 MAC: {{ ansible_eth0.macaddress }}
+     when: ansible_distribution == "Ubuntu"
      debug:
       msg: "{{ msg.split('\n') }}"
-        when: ansible_distribution == "Ubuntu"
+        
 
    - name: OS and Kernel info
      vars:
