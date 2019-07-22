@@ -11,4 +11,4 @@
  
   tasks:
     - debug: var=vars
-    - debug: var=hostvars[192.168.0.120]
+    - debug: var=hostvars
