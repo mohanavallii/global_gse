@@ -16,6 +16,11 @@
      debug:
       msg: "{{ msg.split('\n') }}"
       
+    - name: Ansible fact with conditionals
+      debug:
+        msg: "{{ ansible_distribution_version }}"
+      when: ansible_distribution == "Ubuntu"
+      
    - name: network info
      vars:
       msg: |     
