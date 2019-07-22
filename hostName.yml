@@ -8,11 +8,7 @@
 #   ansible-playbook vars.yml -e 'hosts=localhost'
 #
 - hosts: all
-  tasks:
-    - fail: "You must specify a value for `hosts` variable - e.g.: ansible-playbook vars.yml -e 'hosts=localhost'"
-      when: hosts is not defined
-
-- hosts: "{{ hosts }}"
+ 
   tasks:
     - debug: var=vars
-    - debug: var=hostvars[inventory_hostname]
+    - debug: var=hostvars[192.168.0.120]
