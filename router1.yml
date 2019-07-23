@@ -8,7 +8,6 @@ vars:
     password: admin
     transport: cli
 
----
 # Collect all facts from the device
 - ordnance_facts:
     gather_subset: all
