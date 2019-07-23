@@ -7,7 +7,6 @@
       username: admin
       password: admin
       authorize: yes
-      auth_pass: cisco
 
   tasks:
 
