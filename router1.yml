@@ -1,31 +1,28 @@
 ---
 
-- name: SHOW VERSION
-  hosts: all
-  gather_facts: true
+- name: Network Getting Started First Playbook
   connection: network_cli
-  
-  - debug:
-    msg: System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}
-
-  - debug:
-    msg: System {{ inventory_hostname }} has gateway {{ ansible_default_ipv4.gateway }}
-  when: ansible_default_ipv4.gateway is defined
-
-# Example that prints return information from the previous task
-- shell: /usr/bin/uptime
-  register: result
-
-- debug:
-    var: result
-    verbosity: 2
-
-- name: Display all variables/facts known for a host
-  debug:
-    var: hostvars[inventory_hostname]
-    verbosity: 4
-
+  gather_facts: false
+  hosts: all
   tasks:
-    - name: run the command 'show version'
-      ios_command:
-        commands: show version
+    ###
+    # Collect data
+    #
+    - name: Gather facts (eos)
+      eos_facts:
+      when: ansible_network_os == 'eos'
+
+    - name: Gather facts (ops)
+      ios_facts:
+      when: ansible_network_os == 'ios'
+
+    - name: Gather facts (vyos)
+      vyos_facts:
+      when: ansible_network_os == 'vyos'
+
+    ###
+    # Demonstrate variables
+    #
+    - name: Display some facts
+      debug:
+        msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
