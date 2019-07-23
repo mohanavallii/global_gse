@@ -8,19 +8,25 @@ vars:
     password: admin
     transport: cli
 
-# Collect all facts from the device
-- ordnance_facts:
-    gather_subset: all
-    provider: "{{ cli }}"
+tasks:
+    ###
+    # Collect data
+    #
+    - name: Gather facts (eos)
+      eos_facts:
+      when: ansible_network_os == 'eos'
 
-# Collect only the config and default facts
-- ordnance_facts:
-    gather_subset:
-      - config
-    provider: "{{ cli }}"
+    - name: Gather facts (ops)
+      ios_facts:
+      when: ansible_network_os == 'ios'
 
-# Do not collect hardware facts
-- ordnance_facts:
-    gather_subset:
-      - "!hardware"
-    provider: "{{ cli }}"
+    - name: Gather facts (vyos)
+      vyos_facts:
+      when: ansible_network_os == 'vyos'
+
+    ###
+    # Demonstrate variables
+    #
+    - name: Display some facts
+      debug:
+        msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
