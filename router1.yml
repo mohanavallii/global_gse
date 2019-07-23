@@ -6,7 +6,7 @@
   connection: network_cli
   gather_facts: false
   hosts: all
-  tasks:
+
 vars:
   cli:
     host: all
