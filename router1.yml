@@ -1,22 +1,27 @@
 ---
-- hosts: all
-  connection: network_cli
+# Note: examples below use the following provider dict to handle
+#       transport and authentication to the node.
+vars:
+  cli:
+    host: all
+    username: admin
+    password: admin
+    transport: cli
 
-  vars:
-    cli:
-      ansible_connection: network_cli
-      ansible_network_os: ios
-      ansible_user: admin
-      ansible_password: admin
-      ansible_become: yes
-      ansible_become_method: enable
-      ansible_become_password: admin
+---
+# Collect all facts from the device
+- ordnance_facts:
+    gather_subset: all
+    provider: "{{ cli }}"
 
-  tasks:
+# Collect only the config and default facts
+- ordnance_facts:
+    gather_subset:
+      - config
+    provider: "{{ cli }}"
 
-  - name: Gather facts
-    ios_facts:
-      provider: ""
-    register: result
-
-  - debug: var=result 
+# Do not collect hardware facts
+- ordnance_facts:
+    gather_subset:
+      - "!hardware"
+    provider: "{{ cli }}"
