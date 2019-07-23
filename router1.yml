@@ -2,27 +2,5 @@
 
 - name: Network Getting Started First Playbook
   connection: network_cli
-  gather_facts: false
   hosts: all
-  tasks:
-    ###
-    # Collect data
-    #
-    - name: Gather facts (eos)
-      eos_facts:
-      when: ansible_network_os == 'eos'
-
-    - name: Gather facts (ops)
-      ios_facts:
-      when: ansible_network_os == 'ios'
-
-    - name: Gather facts (vyos)
-      vyos_facts:
-      when: ansible_network_os == 'vyos'
-
-    ###
-    # Demonstrate variables
-    #
-    - name: Display some facts
-      debug:
-        msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
+  gather_facts: true
