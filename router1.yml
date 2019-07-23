@@ -1,6 +1,19 @@
 ---
-
-- name: Network Getting Started First Playbook
+- hosts: all
   connection: network_cli
-  hosts: all
-  gather_facts: true
+
+  vars:
+    cli:
+      username: admin
+      password: admin
+      authorize: yes
+      auth_pass: cisco
+
+  tasks:
+
+  - name: Gather facts
+    ios_facts:
+      provider: ""
+    register: result
+
+  - debug: var=result 
