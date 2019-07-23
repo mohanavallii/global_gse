@@ -1,26 +1,34 @@
-- name: "Demonstrate connecting to switches"
-  hosts: all
-  gather_facts: no
+Tasks: The following are examples of using the module enos_facts.
+---
+- name: Test Enos Facts
+  enos_facts:
+    provider={{ cli }}
 
-  tasks:
-    ###
-    # Collect data
-    #
-    - name: Gather facts (eos)
-      eos_facts:
-      when: ansible_network_os == 'eos'
+  vars:
+    cli:
+      host: all
+      port: 22
+      username: admin
+      password: admin
+      transport: cli
+      timeout: 30
+      authorize: True
+      auth_pass:
 
-    - name: Gather facts (ops)
-      ios_facts:
-      when: ansible_network_os == 'ios'
+---
+# Collect all facts from the device
+- enos_facts:
+    gather_subset: all
+    provider: "{{ cli }}"
 
-    - name: Gather facts (vyos)
-      vyos_facts:
-      when: ansible_network_os == 'vyos'
+# Collect only the config and default facts
+- enos_facts:
+    gather_subset:
+      - config
+    provider: "{{ cli }}"
 
-    ###
-    # Demonstrate variables
-    #
-    - name: Display some facts
-      debug:
-        msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
+# Do not collect hardware facts
+- enos_facts:
+    gather_subset:
+      - "!hardware"
+    provider: "{{ cli }}"
