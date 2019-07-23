@@ -1,20 +1,8 @@
----
-# Note: examples below use the following provider dict to handle
-#       transport and authentication to the node.
-
-- name: Network Getting Started First Playbook
-  connection: network_cli
-  gather_facts: false
+- name: "Demonstrate connecting to switches"
   hosts: all
+  gather_facts: no
 
-vars:
-  cli:
-    host: all
-    username: admin
-    password: admin
-    transport: cli
-
-tasks:
+  tasks:
     ###
     # Collect data
     #
