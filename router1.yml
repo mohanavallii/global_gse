@@ -1,12 +1,15 @@
 ---
-
-- name: automated testing pinging
-  connection: local
-  gather_facts: no
+- name: RUN COMMAND AND PRINT TO TERMINAL WINDOW
   hosts: all
+  gather_facts: false
+
   tasks:
-    
-    - name: execute ping tests
-    auto_pinger
-      source_hosts:{{localhost}}
-     remote_hosts:{{106.51.133.155}}
+
+    - name: RUN ARISTA COMMAND
+      cli_command:
+        command: show ip interface brief
+      register: command_output
+
+    - name: PRINT TO TERMINAL WINDOW
+      debug:
+        msg: "{{command_output.stdout}}"
